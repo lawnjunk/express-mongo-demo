@@ -12,7 +12,7 @@ const errResponse = require('./lib/err-response');
 // globals
 const app = express();
 const port = process.env.PORT || 3000;
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost/note'
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost/note';
 
 // setup db
 mongoose.connect(mongoURI);
