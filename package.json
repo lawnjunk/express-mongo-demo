@@ -1,0 +1,29 @@
+{
+  "name": "express-mongo-demo",
+  "version": "0.0.0",
+  "description": "express app with mongo demo =====",
+  "main": "server.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "slugbyte",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
+    "mocha": "^2.5.2",
+    "superagent": "^2.0.0-alpha.3"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "body-parser": "^1.15.1",
+    "co": "^4.6.0",
+    "debug": "^2.2.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.19",
+    "shortid": "^2.2.6"
+  }
+}

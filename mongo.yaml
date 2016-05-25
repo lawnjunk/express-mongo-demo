@@ -1,0 +1,4 @@
+storage:
+  dbPath: "db"
+  mmapv1:
+     smallFiles: true
