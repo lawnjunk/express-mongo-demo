@@ -7,6 +7,7 @@ const co = require('co');
 const server = require('../server');
 const expect = require('chai').expect;
 const listCrud = require('../lib/list-crud');
+const noteCrud = require('../lib/note-crud');
 const debug = require('debug')('list:list-router-test');
 const request = require('./lib/request')(`localhost:${port}/api`);
 
@@ -129,5 +130,47 @@ describe('testing module list-router', function(){
       }).bind(this)).catch(done);
     });
 
+  });
+
+  describe('testing GET /api/list/:id/notes', function(){
+    before((done) => {
+      co((function* (){
+        this.tempList = yield listCrud.createList({name: 'test data'});
+        const a = noteCrud.createNote({content: 'test data one', listId: this.tempList.id});
+        const b = noteCrud.createNote({content: 'test data two', listId: this.tempList.id});
+        const c = noteCrud.createNote({content: 'test data three', listId: this.tempList.id});
+        this.tempNotes = yield [a, b, c];
+        done();
+      }).bind(this)).catch(done);
+    });
+
+    after((done) => {
+      co(function* (){
+        yield listCrud.removeAllLists()
+        done();
+      }).catch(done);
+    });
+
+    describe('with no query string', () => {
+      it('should return a list of three notes', (done) => {
+        co((function* (){
+          const res = yield request.get(`/list/${this.tempList.id}/notes`)
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(3);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
+
+    describe('with no string ?limit=2', () => {
+      it('should return a list of two notes', (done) => {
+        co((function* (){
+          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=-1`)
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(2);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
   });
 });

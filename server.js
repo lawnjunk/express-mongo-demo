@@ -7,6 +7,7 @@ const debug = require('debug')('note:server');
 const morgan = require('morgan');
 
 // app modules
+const AppErr = require('./lib/app-err');
 const noteRouter = require('./route/note-router');
 const listRouter = require('./route/list-router');
 const errResponse = require('./lib/err-response');
@@ -29,6 +30,11 @@ app.use('/api/list', listRouter);
 app.all('*', function( _ , res){
   debug('* 404');
   res.status(400).send('not found');
+});
+
+app.use(function(err, req, res, next){
+  console.log(err);
+  next();
 });
 
 // start server
