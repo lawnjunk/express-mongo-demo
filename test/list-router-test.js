@@ -6,11 +6,11 @@ const port = process.env.PORT || 3000;
 const co = require('co');
 const server = require('../server');
 const expect = require('chai').expect;
-const noteCrud = require('../lib/note-crud');
-const debug = require('debug')('note:note-router-test');
+const listCrud = require('../lib/list-crud');
+const debug = require('debug')('list:list-router-test');
 const request = require('./lib/request')(`localhost:${port}/api`);
 
-describe('testing module note-router', function(){
+describe('testing module list-router', function(){
   before((done) => {
     if(!server.isRunning){
       server.listen(port, function(){
@@ -37,93 +37,93 @@ describe('testing module note-router', function(){
     done();
   });
 
-  describe('testing POST /api/note', function(){
+  describe('testing POST /api/list', function(){
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield listCrud.removeAllLists()
         done();
       }).catch(done);
     });
 
-    it('should return a note', function(done){
+    it('should return a list', function(done){
       co(function* (){
-        const res = yield request.post('/note').send({content: 'test note'});
+        const res = yield request.post('/list').send({name: 'test list'});
         expect(res.status).to.equal(200);
         done();
       }).catch(done);
     });
   });
 
-  describe('testing GET /api/note/:id', function(){
+  describe('testing GET /api/list/:id', function(){
     before((done) => {
       co((function* (){
-        this.tempNote = yield noteCrud.createNote({content: 'test data'});
+        this.tempList = yield listCrud.createList({name: 'test data'});
         done();
       }).bind(this)).catch(done);
     });
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield listCrud.removeAllLists()
         done();
       }).catch(done);
     });
 
-    it('should return a note', (done) => {
+    it('should return a list', (done) => {
       co((function* (){
-        const res = yield request.get(`/note/${this.tempNote.id}`)
+        const res = yield request.get(`/list/${this.tempList.id}`)
         expect(res.status).to.equal(200);
-        expect(res.body.content).to.equal(this.tempNote.content);
+        expect(res.body.name).to.equal(this.tempList.name);
         done();
       }).bind(this)).catch(done);
     });
 
   });
 
-  describe('testing PUT /api/note/:id', function(){
+  describe('testing PUT /api/list/:id', function(){
     before((done) => {
       co((function* (){
-        this.tempNote = yield noteCrud.createNote({content: 'test data'});
+        this.tempList = yield listCrud.createList({name: 'test data'});
         done();
       }).bind(this)).catch(done);
     });
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield listCrud.removeAllLists()
         done();
       }).catch(done);
     });
 
-    it('should return a note', (done) => {
+    it('should return a list', (done) => {
       co((function* (){
-        const res = yield request.put(`/note/${this.tempNote.id}`).send({content: 'booya'})
+        const res = yield request.put(`/list/${this.tempList.id}`).send({name: 'booya'})
         expect(res.status).to.equal(200);
-        expect(res.body.content).to.equal('booya');
+        expect(res.body.name).to.equal('booya');
         done();
       }).bind(this)).catch(done);
     });
 
   });
 
-  describe('testing DELETE /api/note/:id', function(){
+  describe('testing DELETE /api/list/:id', function(){
     before((done) => {
       co((function* (){
-        this.tempNote = yield noteCrud.createNote({content: 'test data'});
+        this.tempList = yield listCrud.createList({name: 'test data'});
         done();
       }).bind(this)).catch(done);
     });
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield listCrud.removeAllLists()
         done();
       }).catch(done);
     });
 
-    it('should return a note', (done) => {
+    it('should return a list', (done) => {
       co((function* (){
-        const res = yield request.del(`/note/${this.tempNote.id}`)
+        const res = yield request.del(`/list/${this.tempList.id}`)
         expect(res.status).to.equal(200);
         done();
       }).bind(this)).catch(done);

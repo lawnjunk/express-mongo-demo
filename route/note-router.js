@@ -32,3 +32,24 @@ noteRouter.get('/:id', function(req, res) {
     res.sendErr(err);
   });
 });
+
+noteRouter.put('/:id',bodyParser,function(req, res) {
+  debug('GET route /api/note/:id ');
+  co((function* (){
+    yield noteCrud.updateNote(req.params.id, req.body);
+    const note = yield noteCrud.fetchNote(req.params.id);
+    res.json(note);
+  }).bind(this)).catch((err) => {
+    res.sendErr(err);
+  });
+});
+
+noteRouter.delete('/:id',bodyParser,function(req, res) {
+  debug('GET route /api/note/:id ');
+  co((function* (){
+    const note = yield noteCrud.deleteNote(req.params.id);
+    res.json(note);
+  }).bind(this)).catch((err) => {
+    res.sendErr(err);
+  });
+});

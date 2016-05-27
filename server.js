@@ -7,6 +7,7 @@ const debug = require('debug')('note:server');
 
 // app modules
 const noteRouter = require('./route/note-router');
+const listRouter = require('./route/list-router');
 const errResponse = require('./lib/err-response');
 
 // globals
@@ -22,6 +23,7 @@ app.use(errResponse);
 
 // routes
 app.use('/api/note', noteRouter);
+app.use('/api/list', listRouter);
 app.all('*', function( _ , res){
   debug('* 404');
   res.status(400).send('not found');
