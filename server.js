@@ -21,7 +21,6 @@ const mongoURI = process.env.MONGO_URI || 'mongodb://localhost/note';
 mongoose.connect(mongoURI);
 
 // middleware
-app.use(errResponse);
 app.use(morgan('dev'));
 
 // routes
@@ -32,10 +31,7 @@ app.all('*', function( _ , res){
   res.status(400).send('not found');
 });
 
-app.use(function(err, req, res, next){
-  console.log(err);
-  next();
-});
+app.use(errResponse);
 
 // start server
 const server = app.listen(port, function(){

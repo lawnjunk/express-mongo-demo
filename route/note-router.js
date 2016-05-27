@@ -13,43 +13,35 @@ const noteCrud = require('../lib/note-crud');
 // globals -- module
 const noteRouter = module.exports = new Router();
 
-noteRouter.post('/', bodyParser, function(req, res) {
+noteRouter.post('/', bodyParser, function(req, res, next) {
   debug('POST route /api/note');
   co((function* (){
     const note = yield noteCrud.createNote(req.body);
     res.json(note);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-noteRouter.get('/:id', function(req, res) {
+noteRouter.get('/:id', function(req, res, next) {
   debug('GET route /api/note/:id ');
   co((function* (){
     const note = yield noteCrud.fetchNote(req.params.id);
     res.json(note);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-noteRouter.put('/:id',bodyParser,function(req, res) {
+noteRouter.put('/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
   co((function* (){
     yield noteCrud.updateNote(req.params.id, req.body);
     const note = yield noteCrud.fetchNote(req.params.id);
     res.json(note);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-noteRouter.delete('/:id',bodyParser,function(req, res) {
+noteRouter.delete('/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
   co((function* (){
     const note = yield noteCrud.deleteNote(req.params.id);
     res.json(note);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });

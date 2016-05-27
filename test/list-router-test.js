@@ -165,9 +165,20 @@ describe('testing module list-router', function(){
     describe('with no string ?limit=2', () => {
       it('should return a list of two notes', (done) => {
         co((function* (){
-          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=-1`)
+          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2`)
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(2);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
+
+    describe('with no string ?limit=2&offset=2', () => {
+      it('should return a list of one notes', (done) => {
+        co((function* (){
+          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2&offset=2`)
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(1);
           done();
         }).bind(this)).catch(done);
       });

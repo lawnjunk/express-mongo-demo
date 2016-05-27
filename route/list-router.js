@@ -16,54 +16,44 @@ const parseQuery = require('../lib/parse-query');
 // globals -- module
 const listRouter = module.exports = new Router();
 
-listRouter.post('/', bodyParser, function(req, res) {
+listRouter.post('/', bodyParser, function(req, res, next) {
   debug('POST route /api/list');
   co((function* (){
     const list = yield listCrud.createList(req.body);
     res.json(list);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-listRouter.get('/:id', function(req, res) {
+listRouter.get('/:id', function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     const list = yield listCrud.fetchList(req.params.id);
     res.json(list);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-listRouter.put('/:id',bodyParser,function(req, res) {
+listRouter.put('/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     yield listCrud.updateList(req.params.id, req.body);
     const list = yield listCrud.fetchList(req.params.id);
     res.json(list);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-listRouter.delete('/:id',bodyParser,function(req, res) {
+listRouter.delete('/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     const list = yield listCrud.deleteList(req.params.id);
     res.json(list);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
 
-listRouter.get('/:id/notes', parseQuery, function(req, res){
+listRouter.get('/:id/notes', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
   co((function* (){
     console.log('req.query', req.query);
-    const notes = yield noteCrud.fetchListNotes(req.params.id, req.query.limit);
+    const notes = yield noteCrud.fetchListNotes(req.params.id, req.query.limit, req.query.offset);
     return res.json(notes);
-  }).bind(this)).catch((err) => {
-    res.sendErr(err);
-  });
+  }).bind(this)).catch(next);
 });
