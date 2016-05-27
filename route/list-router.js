@@ -53,3 +53,11 @@ listRouter.delete('/:id',bodyParser,function(req, res) {
     res.sendErr(err);
   });
 });
+
+listRouter.get('/:id/notes', function(req, res){
+  debug('GET route /api/list/:id/notes');
+  co((function* (){
+  }).bind(this)).catch((err) => {
+    res.sendErr(err);
+  });
+});

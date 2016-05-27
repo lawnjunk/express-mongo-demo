@@ -4,6 +4,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const debug = require('debug')('note:server');
+const morgan = require('morgan');
 
 // app modules
 const noteRouter = require('./route/note-router');
@@ -20,6 +21,7 @@ mongoose.connect(mongoURI);
 
 // middleware
 app.use(errResponse);
+app.use(morgan('dev'));
 
 // routes
 app.use('/api/note', noteRouter);
