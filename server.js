@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 
 // routes
 app.use('/api/note', noteRouter);
-app.use('/api/list', listRouter);
+app.use('/api', listRouter);
 app.all('*', function( _ , res){
   debug('* 404');
   res.status(400).send('not found');

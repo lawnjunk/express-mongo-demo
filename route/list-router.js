@@ -16,7 +16,7 @@ const parseQuery = require('../lib/parse-query');
 // globals -- module
 const listRouter = module.exports = new Router();
 
-listRouter.post('/', bodyParser, function(req, res, next) {
+listRouter.post('/list', bodyParser, function(req, res, next) {
   debug('POST route /api/list');
   co((function* (){
     const list = yield listCrud.createList(req.body);
@@ -24,7 +24,7 @@ listRouter.post('/', bodyParser, function(req, res, next) {
   }).bind(this)).catch(next);
 });
 
-listRouter.get('/:id', function(req, res, next) {
+listRouter.get('/list/:id', function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     const list = yield listCrud.fetchList(req.params.id);
@@ -32,7 +32,7 @@ listRouter.get('/:id', function(req, res, next) {
   }).bind(this)).catch(next);
 });
 
-listRouter.put('/:id',bodyParser,function(req, res, next) {
+listRouter.put('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     yield listCrud.updateList(req.params.id, req.body);
@@ -41,19 +41,29 @@ listRouter.put('/:id',bodyParser,function(req, res, next) {
   }).bind(this)).catch(next);
 });
 
-listRouter.delete('/:id',bodyParser,function(req, res, next) {
+listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
+    yield noteCrud.removeListNotes(req.params.id);
     const list = yield listCrud.deleteList(req.params.id);
     res.json(list);
   }).bind(this)).catch(next);
 });
 
-listRouter.get('/:id/notes', parseQuery, function(req, res, next){
+listRouter.get('/list/:id/notes', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
   co((function* (){
     console.log('req.query', req.query);
     const notes = yield noteCrud.fetchListNotes(req.params.id, req.query.limit, req.query.offset);
     return res.json(notes);
+  }).bind(this)).catch(next);
+});
+
+listRouter.get('/lists', parseQuery, function(req, res, next){
+  debug('GET route /api/list/:id/notes');
+  co((function* (){
+    console.log('req.query', req.query);
+    const lists =  yield listRouter.fetchAllLists(req.query.limit, req.query.offset);
+    return res.json(lists);
   }).bind(this)).catch(next);
 });
