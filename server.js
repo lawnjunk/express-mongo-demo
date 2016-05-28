@@ -24,11 +24,11 @@ mongoose.connect(mongoURI);
 app.use(morgan('dev'));
 
 // routes
-app.use('/api/note', noteRouter);
+app.use('/api', noteRouter);
 app.use('/api', listRouter);
 app.all('*', function( _ , res){
   debug('* 404');
-  res.status(400).send('not found');
+  res.status(404).send('not found');
 });
 
 app.use(errResponse);

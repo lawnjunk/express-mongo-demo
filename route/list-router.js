@@ -53,7 +53,6 @@ listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
 listRouter.get('/list/:id/notes', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
   co((function* (){
-    console.log('req.query', req.query);
     const notes = yield noteCrud.fetchListNotes(req.params.id, req.query.limit, req.query.offset);
     return res.json(notes);
   }).bind(this)).catch(next);
@@ -62,8 +61,7 @@ listRouter.get('/list/:id/notes', parseQuery, function(req, res, next){
 listRouter.get('/lists', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
   co((function* (){
-    console.log('req.query', req.query);
-    const lists =  yield listRouter.fetchAllLists(req.query.limit, req.query.offset);
+    const lists =  yield listCrud.fetchAllLists(req.query.limit, req.query.offset);
     return res.json(lists);
   }).bind(this)).catch(next);
 });

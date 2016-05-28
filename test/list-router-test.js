@@ -146,13 +146,14 @@ describe('testing module list-router', function(){
 
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield noteCrud.removeAllNotes();
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
 
     describe('with no query string', () => {
-      it('should return a list of three notes', (done) => {
+      it('should return a array of three notes', (done) => {
         co((function* (){
           const res = yield request.get(`/list/${this.tempList.id}/notes`)
           expect(res.status).to.equal(200);
@@ -163,7 +164,7 @@ describe('testing module list-router', function(){
     });
 
     describe('with no string ?limit=2', () => {
-      it('should return a list of two notes', (done) => {
+      it('should return a array of two notes', (done) => {
         co((function* (){
           const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2`)
           expect(res.status).to.equal(200);
@@ -174,9 +175,61 @@ describe('testing module list-router', function(){
     });
 
     describe('with no string ?limit=2&offset=2', () => {
-      it('should return a list of one notes', (done) => {
+      it('should return a array of one note', (done) => {
         co((function* (){
           const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2&offset=2`)
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(1);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
+  });
+
+  describe('testing GET /api/lists', function(){
+    before((done) => {
+      co((function* (){
+        this.a = yield listCrud.createList({name: 'test data one '});
+        this.b = yield listCrud.createList({name: 'test data two '});
+        this.c = yield listCrud.createList({name: 'test data three'});
+        this.tempLists = yield [this.a, this.b, this.c];
+        done();
+      }).bind(this)).catch(done);
+    });
+
+    after((done) => {
+      co(function* (){
+        yield listCrud.removeAllLists()
+        done();
+      }).catch(done);
+    });
+
+    describe('with no query string', () => {
+      it('should return a array of three lists', (done) => {
+        co((function* (){
+          const res = yield request.get('/lists');
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(3);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
+
+    describe('with no string ?limit=2', () => {
+      it('should return a array of two list', (done) => {
+        co((function* (){
+          const res = yield request.get('/lists?limit=2');
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(2);
+          done();
+        }).bind(this)).catch(done);
+      });
+    });
+
+    describe('with no string ?limit=2&offset=2', () => {
+      it('should return a array of one list', (done) => {
+        co((function* (){
+          const res = yield request.get('/lists?limit=2&offset=2');
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(1);
           done();
