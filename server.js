@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const AppErr = require('./lib/app-err');
 const noteRouter = require('./route/note-router');
 const listRouter = require('./route/list-router');
+const authRouter = require('./route/auth-router');
 const errResponse = require('./lib/err-response');
 
 // globals
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 // routes
 app.use('/api', noteRouter);
 app.use('/api', listRouter);
+app.use('/api', authRouter);
 app.all('*', function( _ , res){
   debug('* 404');
   res.status(404).send('not found');

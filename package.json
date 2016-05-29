@@ -21,6 +21,7 @@
     "superagent-promise-plugin": "^3.2.0"
   },
   "dependencies": {
+    "bcrypt": "^0.8.6",
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.1",
     "co": "^4.6.0",
