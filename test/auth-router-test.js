@@ -37,7 +37,7 @@ describe('testing module auth-router', function(){
     done();
   });
 
-  describe('testing route /signup', function(){
+  describe('testing POST /signup', function(){
     after((done) => {
       co(function* (){
         yield userCrud.removeAllUsers();
@@ -49,14 +49,13 @@ describe('testing module auth-router', function(){
       co(function* (){
         const res = yield request.post('/signup')
         .send({username: 'slug', password: 'top-secret'});
-        console.log('res.body', res.body);
         expect(res.status).to.equal(200);
         done();
       }).catch(done);
     });
   });
 
-  describe('testing route /login', function(){
+  describe('testing GET /login', function(){
     before((done) => {
       co(function* (){
         yield userCrud.createUser({username: 'slug', password: 'password123'});
@@ -77,7 +76,6 @@ describe('testing module auth-router', function(){
         const res = yield request.get('/login')
         .set({Authorization: `Basic ${basic.toString('base64')}`});
         expect(res.status).to.equal(200);
-        console.log(res.body);
         done();
       }).catch(done);
     });

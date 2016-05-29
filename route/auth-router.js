@@ -18,7 +18,6 @@ authRouter.post('/signup', jsonParser, (req, res, next) => {
 
 authRouter.get('/login', basicAuth , (req, res, next) => {
   debug('GET /login');
-  console.log('req.auth', req.auth);
   co(function*(){
     const user = yield userCrud.fetchUser(req.auth);
     res.json(user);
