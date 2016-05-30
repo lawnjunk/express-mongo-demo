@@ -5,7 +5,6 @@ const port = process.env.PORT || 3000;
 
 const co = require('co');
 const server = require('../server');
-const mongoose = require('mongoose');
 const expect = require('chai').expect;
 const noteCrud = require('../lib/note-crud');
 const listCrud = require('../lib/list-crud');

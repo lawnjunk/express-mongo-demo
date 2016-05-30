@@ -2,7 +2,9 @@
 
 // npm modules
 const express = require('express');
+const Promise = require('bluebird');
 const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 const debug = require('debug')('note:server');
 const morgan = require('morgan');
 

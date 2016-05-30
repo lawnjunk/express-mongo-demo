@@ -1,9 +1,10 @@
 'use strict';
 
 const shortid = require('shortid');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema
 const Promise = require('bluebird');
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+const Schema = mongoose.Schema
 const AppErr = require('../lib/app-err');
 const bcrypt = require('bcrypt');
 
