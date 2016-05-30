@@ -15,33 +15,28 @@ const noteRouter = module.exports = new Router();
 
 noteRouter.post('/note/', bodyParser, function(req, res, next) {
   debug('POST route /api/note');
-  co((function* (){
-    const note = yield noteCrud.createNote(req.body);
-    res.json(note);
-  }).bind(this)).catch(next);
+  noteCrud.createNote(req.body)
+  .then( note => res.json(note))
+  .catch(next);
 });
 
 noteRouter.get('/note/:id', function(req, res, next) {
   debug('GET route /api/note/:id ');
-  co((function* (){
-    const note = yield noteCrud.fetchNote(req.params.id);
-    res.json(note);
-  }).bind(this)).catch(next);
+  noteCrud.fetchNote(req.params.id)
+  .then( note => res.json(note))
+  .catch(next);
 });
 
 noteRouter.put('/note/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
-  co((function* (){
-    yield noteCrud.updateNote(req.params.id, req.body);
-    const note = yield noteCrud.fetchNote(req.params.id);
-    res.json(note);
-  }).bind(this)).catch(next);
+  noteCrud.updateNote(req.params.id, req.body)
+  .then( note => res.json(note))
+  .catch(next);
 });
 
 noteRouter.delete('/note/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
-  co((function* (){
-    const note = yield noteCrud.removeNote(req.params.id);
-    res.json(note);
-  }).bind(this)).catch(next);
+  noteCrud.removeNote(req.params.id)
+  .then( msg => res.json(msg))
+  .catch(next);
 });
