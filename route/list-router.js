@@ -45,7 +45,7 @@ listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
     yield noteCrud.removeListNotes(req.params.id);
-    const list = yield listCrud.deleteList(req.params.id);
+    const list = yield listCrud.removeList(req.params.id);
     res.json(list);
   }).bind(this)).catch(next);
 });

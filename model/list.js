@@ -1,9 +1,12 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const Promise = require('bluebird');
 
 const listSchema = mongoose.Schema({
   name: {type: String},
 });
 
-module.exports = mongoose.model('List', listSchema);
+const List = module.exports = mongoose.model('List', listSchema); 
+Promise.promisifyAll(List);
+Promise.promisifyAll(List.prototype);

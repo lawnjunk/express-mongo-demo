@@ -41,7 +41,7 @@ noteRouter.put('/note/:id',bodyParser,function(req, res, next) {
 noteRouter.delete('/note/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
   co((function* (){
-    const note = yield noteCrud.deleteNote(req.params.id);
+    const note = yield noteCrud.removeNote(req.params.id);
     res.json(note);
   }).bind(this)).catch(next);
 });
