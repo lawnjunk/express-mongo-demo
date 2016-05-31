@@ -4,12 +4,14 @@
   "description": "express app with mongo demo =====",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "lint": "./node_modules/eslint/bin/eslint.js ."
   },
   "author": "slugbyte",
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
@@ -17,8 +19,8 @@
     "mocha": "^2.5.2",
     "superagent": "^2.0.0-alpha.3",
     "superagent-prefix": "0.0.2",
-    "superagent-use": "0.0.1",
-    "superagent-promise-plugin": "^3.2.0"
+    "superagent-promise-plugin": "^3.2.0",
+    "superagent-use": "0.0.1"
   },
   "dependencies": {
     "bcrypt": "^0.8.6",
