@@ -4,11 +4,9 @@ process.env.MONGO_URI = 'mongodb://localhost/test';
 const port = process.env.PORT || 3000;
 
 const co = require('co');
-const Promse = require('bluebird');
 const server = require('../server');
 const expect = require('chai').expect;
 const listCrud = require('../lib/list-crud');
-const noteCrud = require('../lib/note-crud');
 const debug = require('debug')('list:list-router-test');
 const request = require('./lib/request')(`localhost:${port}/api`);
 
@@ -74,7 +72,7 @@ describe('testing module list-router for bad requests', function(){
 
       after((done) => {
         co(function* (){
-          yield listCrud.removeAllLists()
+          yield listCrud.removeAllLists();
           done();
         }).catch(done);
       });
@@ -91,7 +89,7 @@ describe('testing module list-router for bad requests', function(){
 
     describe('testing PUT /api/list/:id with bad id', function(){
       it('should respond with 404 "not found"', (done) => {
-        request.put(`/list/1234`).send({name: 'wat'})
+        request.put('/list/1234').send({name: 'wat'})
         .catch( err => {
           expect(err.response.status).to.equal(404);
           expect(err.response.text).to.equal('not found');
@@ -115,7 +113,7 @@ describe('testing module list-router for bad requests', function(){
   describe('testing GET /api/list/:id/notes', function(){
     describe('with bad id', () => {
       it('should respond with 404 "not found"', (done) => {
-        request.get(`/list/1234/notes`)
+        request.get('/list/1234/notes')
         .catch( err => {
           expect(err.response.status).to.equal(404);
           expect(err.response.text).to.equal('not found');
@@ -126,7 +124,7 @@ describe('testing module list-router for bad requests', function(){
 
     describe('with no string ?limit=-2', () => {
       it('should respond with 400 "bad request"', (done) => {
-        request.get(`/list/1234/notes?limit=-2`)
+        request.get('/list/1234/notes?limit=-2')
         .catch( err => {
           expect(err.response.status).to.equal(400);
           expect(err.response.text).to.equal('bad request');
@@ -137,7 +135,7 @@ describe('testing module list-router for bad requests', function(){
 
     describe('with no string ?limit=0', () => {
       it('should respond with 400 "bad request"', (done) => {
-        request.get(`/list/1234/notes?limit=0`)
+        request.get('/list/1234/notes?limit=0')
         .catch( err => {
           expect(err.response.status).to.equal(400);
           expect(err.response.text).to.equal('bad request');
@@ -148,7 +146,7 @@ describe('testing module list-router for bad requests', function(){
 
     describe('with no string ?offset=-1', () => {
       it('should respond with 400 "bad request"', (done) => {
-        request.get(`/list/1234/notes?limit=-1`)
+        request.get('/list/1234/notes?limit=-1')
         .catch( err => {
           expect(err.response.status).to.equal(400);
           expect(err.response.text).to.equal('bad request');

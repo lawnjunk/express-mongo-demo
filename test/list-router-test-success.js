@@ -41,7 +41,7 @@ describe('testing module list-router', function(){
   describe('testing POST /api/list', function(){
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
@@ -65,14 +65,14 @@ describe('testing module list-router', function(){
 
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
 
     it('should return a list', (done) => {
       co((function* (){
-        const res = yield request.get(`/list/${this.tempList.id}`)
+        const res = yield request.get(`/list/${this.tempList.id}`);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal(this.tempList.name);
         done();
@@ -91,14 +91,14 @@ describe('testing module list-router', function(){
 
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
 
     it('should return a list', (done) => {
       co((function* (){
-        const res = yield request.put(`/list/${this.tempList.id}`).send({name: 'booya'})
+        const res = yield request.put(`/list/${this.tempList.id}`).send({name: 'booya'});
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('booya');
         done();
@@ -117,14 +117,14 @@ describe('testing module list-router', function(){
 
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
 
-    it('should return a list', (done) => {
+    it('should return a 200 status', (done) => {
       co((function* (){
-        const res = yield request.del(`/list/${this.tempList.id}`)
+        const res = yield request.del(`/list/${this.tempList.id}`);
         expect(res.status).to.equal(200);
         done();
       }).bind(this)).catch(done);
@@ -155,7 +155,7 @@ describe('testing module list-router', function(){
     describe('with no query string', () => {
       it('should return a array of three notes', (done) => {
         co((function* (){
-          const res = yield request.get(`/list/${this.tempList.id}/notes`)
+          const res = yield request.get(`/list/${this.tempList.id}/notes`);
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(3);
           done();
@@ -166,7 +166,7 @@ describe('testing module list-router', function(){
     describe('with no string ?limit=2', () => {
       it('should return a array of two notes', (done) => {
         co((function* (){
-          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2`)
+          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2`);
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(2);
           done();
@@ -177,7 +177,7 @@ describe('testing module list-router', function(){
     describe('with no string ?limit=2&offset=2', () => {
       it('should return a array of one note', (done) => {
         co((function* (){
-          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2&offset=2`)
+          const res = yield request.get(`/list/${this.tempList.id}/notes?limit=2&offset=2`);
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(1);
           done();
@@ -199,7 +199,7 @@ describe('testing module list-router', function(){
 
     after((done) => {
       co(function* (){
-        yield listCrud.removeAllLists()
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
