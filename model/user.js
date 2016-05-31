@@ -2,9 +2,10 @@
 
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
-mongoose.Promise = Promise;
 const AppErr = require('../lib/app-err');
+const debug = require('debug')('note:user');
 const bcrypt = require('bcrypt');
+mongoose.Promise = Promise;
 
 
 const userSchema = mongoose.Schema({
@@ -13,6 +14,7 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.methods.generateHash = function(password){
+  debug('generateHash');
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 8, (err, encrypted) => {
       if (err) {
@@ -26,6 +28,7 @@ userSchema.methods.generateHash = function(password){
 };
 
 userSchema.methods.compareHash = function(password){
+  debug('compareHash');
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, function(err, result){
       if (err) return reject(err);
