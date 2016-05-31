@@ -50,6 +50,7 @@ describe('testing module note-router', function(){
     after((done) => {
       co(function* (){
         yield noteCrud.removeAllNotes();
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
@@ -78,6 +79,7 @@ describe('testing module note-router', function(){
     after((done) => {
       co(function* (){
         yield noteCrud.removeAllNotes();
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
@@ -108,6 +110,7 @@ describe('testing module note-router', function(){
     after((done) => {
       co(function* (){
         yield noteCrud.removeAllNotes();
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });
@@ -137,6 +140,7 @@ describe('testing module note-router', function(){
     after((done) => {
       co(function* (){
         yield noteCrud.removeAllNotes();
+        yield listCrud.removeAllLists();
         done();
       }).catch(done);
     });

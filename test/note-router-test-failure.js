@@ -99,6 +99,7 @@ describe('testing module note-router with bad requests', function(){
       after((done) => {
         co(function* (){
           yield noteCrud.removeAllNotes();
+          yield listCrud.removeAllLists();
           done();
         }).catch(done);
       });
