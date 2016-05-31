@@ -2,7 +2,6 @@
 
 // node moduels
 // npm moduels
-const co = require('co');
 const Router = require('express').Router;
 const bodyParser = require('body-parser').json();
 const debug = require('debug')('list:list-router');
@@ -41,7 +40,7 @@ listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   listCrud.removeList(req.params.id)
   .then( () => res.status(204).send())
-  .catch(next)
+  .catch(next);
 });
 
 listRouter.get('/list/:id/notes', parseQuery, function(req, res, next){
