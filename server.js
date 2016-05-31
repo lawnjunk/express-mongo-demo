@@ -13,6 +13,7 @@ const noteRouter = require('./route/note-router');
 const listRouter = require('./route/list-router');
 const authRouter = require('./route/auth-router');
 const errResponse = require('./lib/err-response');
+require('./lib/log');
 
 // globals
 const app = express();
