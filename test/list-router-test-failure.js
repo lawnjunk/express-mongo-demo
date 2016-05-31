@@ -125,24 +125,35 @@ describe('testing module list-router for bad requests', function(){
     });
 
     describe('with no string ?limit=-2', () => {
-      it('should return a array of two notes', (done) => {
-        co((function* (){
-          const res = yield request.get(`/list/1234/notes?limit=2`)
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(2);
+      it('should respond with 400 "bad request"', (done) => {
+        request.get(`/list/1234/notes?limit=-2`)
+        .catch( err => {
+          expect(err.response.status).to.equal(400);
+          expect(err.response.text).to.equal('bad request');
           done();
-        }).bind(this)).catch(done);
+        });
       });
     });
 
-    describe('with no string ?limit=-1&offset=2', () => {
-      it('should return a array of one note', (done) => {
-        co((function* (){
-          const res = yield request.get(`/list/1234/notes?limit=2&offset=2`)
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(1);
+    describe('with no string ?limit=0', () => {
+      it('should respond with 400 "bad request"', (done) => {
+        request.get(`/list/1234/notes?limit=0`)
+        .catch( err => {
+          expect(err.response.status).to.equal(400);
+          expect(err.response.text).to.equal('bad request');
           done();
-        }).bind(this)).catch(done);
+        });
+      });
+    });
+
+    describe('with no string ?offset=-1', () => {
+      it('should respond with 400 "bad request"', (done) => {
+        request.get(`/list/1234/notes?limit=-1`)
+        .catch( err => {
+          expect(err.response.status).to.equal(400);
+          expect(err.response.text).to.equal('bad request');
+          done();
+        });
       });
     });
   });
