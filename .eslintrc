@@ -29,8 +29,7 @@
     "beforeEach": false,
     "afterEach": false,
     "before": false,
-    "after": false,
-    "log": true
+    "after": false
   },
   "ecmaFeatures": {
     "modules": true,
