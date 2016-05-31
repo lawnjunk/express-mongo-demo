@@ -122,10 +122,10 @@ describe('testing module list-router', function(){
       }).catch(done);
     });
 
-    it('should return a 200 status', (done) => {
+    it('should return a 204 status', (done) => {
       co((function* (){
         const res = yield request.del(`/list/${this.tempList.id}`);
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(204);
         done();
       }).bind(this)).catch(done);
     });

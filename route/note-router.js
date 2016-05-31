@@ -36,6 +36,6 @@ noteRouter.put('/note/:id',bodyParser,function(req, res, next) {
 noteRouter.delete('/note/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/note/:id ');
   noteCrud.removeNote(req.params.id)
-  .then( msg => res.json(msg))
+  .then( () => res.status(204).send())
   .catch(next);
 });

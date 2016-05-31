@@ -141,10 +141,10 @@ describe('testing module note-router', function(){
       }).catch(done);
     });
 
-    it('should return a note', (done) => {
+    it('should return a 204', (done) => {
       co((function* (){
         const res = yield request.del(`/note/${this.tempNote.id}`);
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(204);
         done();
       }).bind(this)).catch(done);
     });

@@ -17,49 +17,43 @@ const listRouter = module.exports = new Router();
 
 listRouter.post('/list', bodyParser, function(req, res, next) {
   debug('POST route /api/list');
-  co((function* (){
-    const list = yield listCrud.createList(req.body);
-    res.json(list);
-  }).bind(this)).catch(next);
+  listCrud.createList(req.body)
+  .then(list => res.json(list))
+  .catch(next);
 });
 
 listRouter.get('/list/:id', function(req, res, next) {
   debug('GET route /api/list/:id ');
-  co((function* (){
-    const list = yield listCrud.fetchList(req.params.id);
-    res.json(list);
-  }).bind(this)).catch(next);
+  listCrud.fetchList(req.params.id)
+  .then( list => res.json(list))
+  .catch(next);
 });
 
 listRouter.put('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
-  co((function* (){
-    yield listCrud.updateList(req.params.id, req.body);
-    const list = yield listCrud.fetchList(req.params.id);
-    res.json(list);
-  }).bind(this)).catch(next);
+  listCrud.updateList(req.params.id, req.body)
+  .then( () => listCrud.fetchList(req.params.id))
+  .then( list => res.json(list))
+  .catch(next);
 });
 
 listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
-  co((function* (){
-    const list = yield listCrud.removeList(req.params.id);
-    res.json(list);
-  }).bind(this)).catch(next);
+  listCrud.removeList(req.params.id)
+  .then( () => res.status(204).send())
+  .catch(next)
 });
 
 listRouter.get('/list/:id/notes', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
-  co((function* (){
-    const notes = yield noteCrud.fetchListNotes(req.params.id, req.query.limit, req.query.offset);
-    return res.json(notes);
-  }).bind(this)).catch(next);
+  noteCrud.fetchListNotes(req.params.id, req.query.limit, req.query.offset)
+  .then( notes => res.json(notes))
+  .catch(next);
 });
 
 listRouter.get('/lists', parseQuery, function(req, res, next){
   debug('GET route /api/list/:id/notes');
-  co((function* (){
-    const lists =  yield listCrud.fetchAllLists(req.query.limit, req.query.offset);
-    return res.json(lists);
-  }).bind(this)).catch(next);
+  listCrud.fetchAllLists(req.query.limit, req.query.offset)
+  .then( lists => res.json(lists))
+  .catch(next);
 });
