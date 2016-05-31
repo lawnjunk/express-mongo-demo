@@ -128,7 +128,8 @@ describe('testing module note-router', function(){
   describe('testing DELETE /api/note/:id', function(){
     before((done) => {
       co((function* (){
-        this.tempNote = yield noteCrud.createNote({content: 'test data'});
+        this.tempList = yield listCrud.createList({name: 'test list'});
+        this.tempNote = yield noteCrud.createNote({content: 'test data', listId: this.tempList._id});
         done();
       }).bind(this)).catch(done);
     });
