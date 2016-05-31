@@ -1,10 +1,8 @@
 'use strict';
 
-const shortid = require('shortid');
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
-const Schema = mongoose.Schema
 const AppErr = require('../lib/app-err');
 const bcrypt = require('bcrypt');
 
@@ -23,20 +21,20 @@ userSchema.methods.generateHash = function(password){
       }
       this.password = encrypted;
       resolve();
-    })
+    });
   });
 };
 
 userSchema.methods.compareHash = function(password){
   return new Promise((resolve, reject) => {
-   bcrypt.compare(password, this.password, function(err, result){
-     if (err) return reject(err);
-     if (!result) {
-       err = new AppErr.error401('wrong password');
-       return reject(err);
-     }
-     resolve();
-   });;
+    bcrypt.compare(password, this.password, function(err, result){
+      if (err) return reject(err);
+      if (!result) {
+        err = new AppErr.error401('wrong password');
+        return reject(err);
+      }
+      resolve();
+    });
   });
 };
 

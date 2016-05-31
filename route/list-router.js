@@ -8,7 +8,6 @@ const bodyParser = require('body-parser').json();
 const debug = require('debug')('list:list-router');
 
 // app moduels
-const AppErr = require('../lib/app-err');
 const listCrud = require('../lib/list-crud');
 const noteCrud = require('../lib/note-crud');
 const parseQuery = require('../lib/parse-query');
@@ -44,7 +43,6 @@ listRouter.put('/list/:id',bodyParser,function(req, res, next) {
 listRouter.delete('/list/:id',bodyParser,function(req, res, next) {
   debug('GET route /api/list/:id ');
   co((function* (){
-    yield noteCrud.removeListNotes(req.params.id);
     const list = yield listCrud.removeList(req.params.id);
     res.json(list);
   }).bind(this)).catch(next);

@@ -2,7 +2,6 @@
 
 // node moduels
 // npm moduels
-const co = require('co');
 const Router = require('express').Router;
 const bodyParser = require('body-parser').json();
 const debug = require('debug')('note:note-router');

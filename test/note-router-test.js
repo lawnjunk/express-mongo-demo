@@ -49,7 +49,7 @@ describe('testing module note-router', function(){
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield noteCrud.removeAllNotes();
         done();
       }).catch(done);
     });
@@ -58,7 +58,7 @@ describe('testing module note-router', function(){
       co((function* (){
         const res = yield request.post('/note').send({content: 'test note', listId: this.tempList.id });
         expect(res.status).to.equal(200);
-        const note = res.body
+        const note = res.body;
         expect(note.content).to.equal('test note');
         expect(note.listId).to.equal(this.tempList.id);
         done();
@@ -77,14 +77,14 @@ describe('testing module note-router', function(){
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield noteCrud.removeAllNotes();
         done();
       }).catch(done);
     });
 
     it('should return a note', (done) => {
       co((function* (){
-        const res = yield request.get(`/note/${this.tempNote.id}`)
+        const res = yield request.get(`/note/${this.tempNote.id}`);
         expect(res.status).to.equal(200);
         const note = res.body;
         expect(note.content).to.equal(this.tempNote.content);
@@ -107,14 +107,14 @@ describe('testing module note-router', function(){
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield noteCrud.removeAllNotes();
         done();
       }).catch(done);
     });
 
     it('should return a note', (done) => {
       co((function* (){
-        const res = yield request.put(`/note/${this.tempNote.id}`).send({content: 'booya'})
+        const res = yield request.put(`/note/${this.tempNote.id}`).send({content: 'booya'});
         expect(res.status).to.equal(200);
         const note = res.body;
         expect(note.content).to.equal('booya');
@@ -135,14 +135,14 @@ describe('testing module note-router', function(){
 
     after((done) => {
       co(function* (){
-        yield noteCrud.removeAllNotes()
+        yield noteCrud.removeAllNotes();
         done();
       }).catch(done);
     });
 
     it('should return a note', (done) => {
       co((function* (){
-        const res = yield request.del(`/note/${this.tempNote.id}`)
+        const res = yield request.del(`/note/${this.tempNote.id}`);
         expect(res.status).to.equal(200);
         done();
       }).bind(this)).catch(done);

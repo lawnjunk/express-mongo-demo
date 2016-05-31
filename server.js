@@ -9,7 +9,6 @@ const debug = require('debug')('note:server');
 const morgan = require('morgan');
 
 // app modules
-const AppErr = require('./lib/app-err');
 const noteRouter = require('./route/note-router');
 const listRouter = require('./route/list-router');
 const authRouter = require('./route/auth-router');
