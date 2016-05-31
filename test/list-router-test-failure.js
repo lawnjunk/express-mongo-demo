@@ -53,7 +53,7 @@ describe('testing module list-router for bad requests', function(){
   });
 
   describe('testing GET /api/list/:id with bad id', function(){
-    it('shold return status code 400', (done) => {
+    it('shold return status code 404', (done) => {
       request.get('/list/1234')
       .catch( err => {
         expect(err.response.status).to.equal(404);
@@ -79,7 +79,7 @@ describe('testing module list-router for bad requests', function(){
         }).catch(done);
       });
 
-      it('should return a list', (done) => {
+      it('should respond with 400 "bad request"', (done) => {
         request.put(`/list/${this.tempList._id}`).send({})
         .catch( err => {
           expect(err.response.status).to.equal(400);
@@ -90,7 +90,7 @@ describe('testing module list-router for bad requests', function(){
     });
 
     describe('testing PUT /api/list/:id with bad id', function(){
-      it('should return a list', (done) => {
+      it('should respond with 404 "not found"', (done) => {
         request.put(`/list/1234`).send({name: 'wat'})
         .catch( err => {
           expect(err.response.status).to.equal(404);
@@ -102,7 +102,7 @@ describe('testing module list-router for bad requests', function(){
   });
 
   describe('testing DELETE /api/list/:id with bad id', function(){
-    it('should return a list', (done) => {
+    it('should respond with 404 "not found"', (done) => {
       request.del('/list/1234')
       .catch( err => {
         expect(err.response.status).to.equal(404);
@@ -114,7 +114,7 @@ describe('testing module list-router for bad requests', function(){
 
   describe('testing GET /api/list/:id/notes', function(){
     describe('with bad id', () => {
-      it('should return a array of three notes', (done) => {
+      it('should respond with 404 "not found"', (done) => {
         request.get(`/list/1234/notes`)
         .catch( err => {
           expect(err.response.status).to.equal(404);
@@ -154,58 +154,6 @@ describe('testing module list-router for bad requests', function(){
           expect(err.response.text).to.equal('bad request');
           done();
         });
-      });
-    });
-  });
-
-  describe('testing GET /api/lists', function(){
-    before((done) => {
-      co((function* (){
-        this.a = yield listCrud.createList({name: 'test data one '});
-        this.b = yield listCrud.createList({name: 'test data two '});
-        this.c = yield listCrud.createList({name: 'test data three'});
-        this.tempLists = yield [this.a, this.b, this.c];
-        done();
-      }).bind(this)).catch(done);
-    });
-
-    after((done) => {
-      co(function* (){
-        yield listCrud.removeAllLists()
-        done();
-      }).catch(done);
-    });
-
-    describe('with no query string', () => {
-      it('should return a array of three lists', (done) => {
-        co((function* (){
-          const res = yield request.get('/lists');
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(3);
-          done();
-        }).bind(this)).catch(done);
-      });
-    });
-
-    describe('with no string ?limit=2', () => {
-      it('should return a array of two list', (done) => {
-        co((function* (){
-          const res = yield request.get('/lists?limit=2');
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(2);
-          done();
-        }).bind(this)).catch(done);
-      });
-    });
-
-    describe('with no string ?limit=2&offset=2', () => {
-      it('should return a array of one list', (done) => {
-        co((function* (){
-          const res = yield request.get('/lists?limit=2&offset=2');
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(1);
-          done();
-        }).bind(this)).catch(done);
       });
     });
   });
